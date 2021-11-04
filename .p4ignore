@@ -1,0 +1,11 @@
+Saved/
+Intermediate/
+DerivedDataCache/
+FileOpenOrder/
+obj/
+.git/
+*.pdb
+*.vcxproj
+*.sln
+*-Debug.*
+.gitignore
