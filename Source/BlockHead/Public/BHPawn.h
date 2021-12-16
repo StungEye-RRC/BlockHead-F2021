@@ -27,5 +27,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Setup")
 	UStaticMeshComponent* Cube;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Setup")
+	class USpringArmComponent* SpringArm;
+	// The class keyword forward declares so that we don't need to include the header.
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Setup")
+	class UCameraComponent* Camera; // The class keyword forward declares so that we don't need to include the header.
+
+	UPROPERTY(EditAnywhere, Category = "Floats")
+	float ForwardForce = 2000;
+
+	UPROPERTY(EditAnywhere, Category = "Floats")
+	float SideForce = 5;
 };
