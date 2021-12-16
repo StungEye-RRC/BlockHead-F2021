@@ -39,4 +39,27 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Floats")
 	float SideForce = 5;
+
+	class ABHGameMode* GameMode;
+	bool bLevelEnded = false;
+	float Mass;
+	float DeltaSeconds;
+
+	UFUNCTION()
+	void OnHit(class UPrimitiveComponent* MyComp, AActor* Other,
+	           class UPrimitiveComponent* OtherComp,
+	           FVector NormalImpulse,
+	           const FHitResult& Hit);
+
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* OverlappedComp,
+	                    AActor* OtherActor,
+	                    UPrimitiveComponent* OtherComp,
+	                    int32 OtherBodyIndex,
+	                    bool bFromSweep,
+	                    const FHitResult& SweepResult);
+
+	void PlayerDied();
+	void MoveRight(float AxisValue);
+	void KillPlayer();
 };
