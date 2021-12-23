@@ -2,6 +2,8 @@
 
 
 #include "BHGameMode.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 ABHGameMode::ABHGameMode() {
 }

@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "BHGameMode.generated.h"
 
+// class UUserWidget; // Forward Declaration Not Required.
+
 /**
  * 
  */
