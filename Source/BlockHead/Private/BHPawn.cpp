@@ -51,11 +51,11 @@ void ABHPawn::Tick(float DeltaTime) {
 
 	if (!bLevelEnded) {
 		// Forward Motion
-		FVector Impulse = FVector(Mass * ForwardForce * DeltaTime, 0.0f, 0.0f);
+		const FVector Impulse = FVector(Mass * ForwardForce * DeltaTime, 0.0f, 0.0f);
 		Cube->AddImpulse(Impulse);
 
 		// Kill Z
-		FVector ActorLocation = GetActorLocation();
+		const FVector ActorLocation = GetActorLocation();
 		if (ActorLocation.Z < -30) {
 			KillPlayer();
 		}
@@ -84,7 +84,7 @@ void ABHPawn::PlayerDied() {
 
 void ABHPawn::MoveRight(float AxisValue) {
 	if (!bLevelEnded) {
-		FVector Impulse = FVector(0.0f, Mass * SideForce * DeltaSeconds * AxisValue, 0.0f);
+		const FVector Impulse = FVector(0.0f, Mass * SideForce * DeltaSeconds * AxisValue, 0.0f);
 		Cube->AddImpulse(Impulse, "", true);
 	}
 }
