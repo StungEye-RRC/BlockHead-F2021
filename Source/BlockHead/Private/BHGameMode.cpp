@@ -18,6 +18,12 @@ void ABHGameMode::BeginPlay() {
 
 	CheckLevel();
 
+	if (DefaultHUD) {
+		// UE_LOG(LogTemp, Warning, TEXT("Attempting to create HUD"));
+		HUD = CreateWidget<UUserWidget>(GetWorld(), DefaultHUD);
+		HUD->AddToViewport();
+	}
+
 }
 
 void ABHGameMode::CheckLevel() {

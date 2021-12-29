@@ -30,6 +30,10 @@ protected:
 	TSubclassOf<UUserWidget> DefaultGameCompleteWidget;
 	UUserWidget* GameCompleteWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG")
+	TSubclassOf<UUserWidget> DefaultHUD;
+	UUserWidget* HUD;
+
 private:
 	virtual void BeginPlay() override;
 
