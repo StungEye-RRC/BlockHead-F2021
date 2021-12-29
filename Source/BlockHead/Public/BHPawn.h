@@ -45,6 +45,8 @@ protected:
 	float Mass;
 	float DeltaSeconds;
 
+	FTimerHandle EndGameTimer;
+
 	UFUNCTION()
 	void OnHit(class UPrimitiveComponent* MyComp, AActor* Other,
 	           class UPrimitiveComponent* OtherComp,

@@ -3,6 +3,8 @@
 
 #include "BHPawn.h"
 #include "BHGameMode.h"
+#include "BHObstacle.h"
+#include "BHEndPoint.h"
 
 #include "Camera/CameraComponent.h"
 #include "Engine/StaticMeshSocket.h"
@@ -73,13 +75,28 @@ void ABHPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
 
 void ABHPawn::OnHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
                     const FHitResult& Hit) {
+	ABHObstacle* Obstacle = Cast<ABHObstacle>(Other);
+	if (Obstacle) {
+		PlayerDied();
+	}
 }
 
 void ABHPawn::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                              int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+	ABHEndPoint* EndPoint = Cast<ABHEndPoint>(OtherActor);
+	if (EndPoint) {
+		GameMode->LevelComplete();
+	}
 }
 
 void ABHPawn::PlayerDied() {
+	if (bLevelEnded) {
+		return;
+	}
+
+	bLevelEnded = true;
+
+	GetWorldTimerManager().SetTimer(EndGameTimer, this, &ABHPawn::KillPlayer, 2.0f, false);
 }
 
 void ABHPawn::MoveRight(float AxisValue) {
@@ -90,4 +107,5 @@ void ABHPawn::MoveRight(float AxisValue) {
 }
 
 void ABHPawn::KillPlayer() {
+	GameMode->EndGame();
 }
