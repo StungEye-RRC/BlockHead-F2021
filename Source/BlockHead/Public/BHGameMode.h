@@ -24,12 +24,10 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG")
 	TSubclassOf<UUserWidget> DefaultLevelCompleteWidget;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG")
 	UUserWidget* LevelCompleteWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG")
 	TSubclassOf<UUserWidget> DefaultGameCompleteWidget;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG")
 	UUserWidget* GameCompleteWidget;
 
 private:
@@ -40,8 +38,10 @@ private:
 
 	APlayerController* Controller;
 
-	int32 CurrentLevelIndex;
+	int32 CurrentLevelIndex = 0;
 	FString NextLevel;
+
+	FTimerHandle LevelSwapTimer;
 
 	void CheckLevel();
 };

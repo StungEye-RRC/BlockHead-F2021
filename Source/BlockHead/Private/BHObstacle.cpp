@@ -4,24 +4,20 @@
 #include "BHObstacle.h"
 
 // Sets default values
-ABHObstacle::ABHObstacle()
-{
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ABHObstacle::ABHObstacle() {
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
 // Called when the game starts or when spawned
-void ABHObstacle::BeginPlay()
-{
+void ABHObstacle::BeginPlay() {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
-void ABHObstacle::Tick(float DeltaTime)
-{
+void ABHObstacle::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 }
-
