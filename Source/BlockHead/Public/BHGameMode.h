@@ -21,6 +21,8 @@ public:
 	void LevelComplete();
 	void LoadNextLevel();
 
+	FString CleanLevelString();
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG")
 	TSubclassOf<UUserWidget> DefaultLevelCompleteWidget;
@@ -48,4 +50,5 @@ private:
 	FTimerHandle LevelSwapTimer;
 
 	void CheckLevel();
+	void LoadFinalMenu(bool bGameOver);
 };

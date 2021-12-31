@@ -4,6 +4,7 @@
 #include "BHGameMode.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
+#include "Misc/OutputDeviceNull.h"
 
 ABHGameMode::ABHGameMode() {
 }
@@ -11,6 +12,7 @@ ABHGameMode::ABHGameMode() {
 void ABHGameMode::BeginPlay() {
 	Super::BeginPlay();
 
+	UE_LOG(LogTemp, Warning, TEXT("Begin Play"));
 	Controller = GetWorld()->GetFirstPlayerController();
 	FInputModeGameOnly InputMode;
 	Controller->SetInputMode(InputMode);
@@ -19,7 +21,6 @@ void ABHGameMode::BeginPlay() {
 	CheckLevel();
 
 	if (DefaultHUD) {
-		// UE_LOG(LogTemp, Warning, TEXT("Attempting to create HUD"));
 		HUD = CreateWidget<UUserWidget>(GetWorld(), DefaultHUD);
 		HUD->AddToViewport();
 	}
@@ -27,7 +28,8 @@ void ABHGameMode::BeginPlay() {
 }
 
 void ABHGameMode::CheckLevel() {
-	const FString CurrentLevelName = GetWorld()->GetMapName();
+	const FString CurrentLevelName = CleanLevelString();
+
 	Levels.Find(CurrentLevelName, CurrentLevelIndex);
 
 	if (CurrentLevelIndex < Levels.Num() - 1) {
@@ -37,10 +39,31 @@ void ABHGameMode::CheckLevel() {
 	}
 }
 
+void ABHGameMode::LoadFinalMenu(bool bWonGame) {
+	if (DefaultGameCompleteWidget) {
+		FOutputDeviceNull Ar;
+		const FString WinOrLossText{bWonGame ? "setWinOrLoss true" : "setWinOrLoss false"};
+
+		GameCompleteWidget = CreateWidget<UUserWidget>(GetWorld(), DefaultGameCompleteWidget);
+		GameCompleteWidget->CallFunctionByNameWithArguments(*WinOrLossText, Ar, nullptr, true);
+		GameCompleteWidget->AddToViewport();
+
+		const FInputModeUIOnly InputMode;
+		Controller->SetInputMode(InputMode);
+		Controller->bShowMouseCursor = true;
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("No Default Game Complete Widget Selected!"));
+	}
+}
+
 void ABHGameMode::EndGame() {
-	const FString LevelString = GetWorld()->GetMapName();
+	// Reload the game current level commented out. 
+	/*
+	const FString LevelString = CleanLevelString();
 	const FName LevelToLoad = FName(*LevelString);
 	UGameplayStatics::OpenLevel(this, LevelToLoad, true);
+	*/
+	LoadFinalMenu(false);
 }
 
 void ABHGameMode::LevelComplete() {
@@ -62,16 +85,18 @@ void ABHGameMode::LoadNextLevel() {
 	} else {
 		if (LevelCompleteWidget) {
 			LevelCompleteWidget->RemoveFromParent();
-			if (DefaultGameCompleteWidget) {
-				GameCompleteWidget = CreateWidget<UUserWidget>(GetWorld(), DefaultGameCompleteWidget);
-				GameCompleteWidget->AddToViewport();
-
-				Controller->bShowMouseCursor = true;
-				FInputModeUIOnly InputMode;
-				Controller->SetInputMode(InputMode);
-			} else {
-				UE_LOG(LogTemp, Warning, TEXT("No Default Game Complete Widget Selected!"));
-			}
+			LoadFinalMenu(true);
 		}
 	}
+}
+
+FString ABHGameMode::CleanLevelString() {
+	if (GEngine) {
+		FString Prefix = GEngine->GetWorldFromContextObject(GetWorld())->StreamingLevelsPrefix;
+		FString LevelName = GetWorld()->GetMapName();
+		return LevelName.RightChop(Prefix.Len());
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("ABHGameMode::CleanLevelString cannot find level prefix. GEgine missing."));
+	return "ERROR: See log.";
 }

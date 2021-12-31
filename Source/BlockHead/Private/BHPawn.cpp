@@ -58,10 +58,11 @@ void ABHPawn::Tick(float DeltaTime) {
 
 		// Kill Z
 		const FVector ActorLocation = GetActorLocation();
-		if (ActorLocation.Z < -30) {
-			KillPlayer();
+		if (ActorLocation.Z < killZThreshold) {
+			PlayerDied();
 		}
-
+	} else if (bHardStopOnCrash) {
+		Cube->SetPhysicsLinearVelocity(FVector(0, 0, 0));
 	}
 
 	DeltaSeconds = DeltaTime;
@@ -85,6 +86,7 @@ void ABHPawn::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherA
                              int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	ABHEndPoint* EndPoint = Cast<ABHEndPoint>(OtherActor);
 	if (EndPoint) {
+		bLevelEnded = true;
 		GameMode->LevelComplete();
 	}
 }

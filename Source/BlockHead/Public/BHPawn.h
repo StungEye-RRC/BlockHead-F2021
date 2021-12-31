@@ -34,10 +34,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Setup")
 	class UCameraComponent* Camera; // The class keyword forward declares so that we don't need to include the header.
 
-	UPROPERTY(EditAnywhere, Category = "Floats")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
+	int killZThreshold = -30;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
+	bool bHardStopOnCrash = false;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
 	float ForwardForce = 2000;
 
-	UPROPERTY(EditAnywhere, Category = "Floats")
+	UPROPERTY(EditAnywhere, Category = "Movement")
 	float SideForce = 5;
 
 	class ABHGameMode* GameMode;
