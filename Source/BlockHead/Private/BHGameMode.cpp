@@ -57,7 +57,7 @@ void ABHGameMode::LoadFinalMenu(bool bWonGame) {
 }
 
 void ABHGameMode::EndGame() {
-	// Reload the game current level commented out. 
+	// Reload the game current level. Commented out and replaced by insta-death.
 	/*
 	const FString LevelString = CleanLevelString();
 	const FName LevelToLoad = FName(*LevelString);
