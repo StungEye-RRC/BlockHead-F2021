@@ -8,23 +8,19 @@
 ABHPlayerCube::ABHPlayerCube() {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	//	UE_LOG(LogTemp, Warning, TEXT("BHPlayerCube Constructor"));
 	print("Constructor");
 }
 
 // Called when the game starts or when spawned
 void ABHPlayerCube::BeginPlay() {
 	Super::BeginPlay();
-	//	UE_LOG(LogTemp, Warning, TEXT("BHPlayerCube BeginPlay"));
 	print("BeginPlayer");
 }
 
 // Called every frame
 void ABHPlayerCube::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-
-	//	UE_LOG(LogTemp, Warning, TEXT("BHPlayerCube Tick"));
-	print("Tick");
+	// print("Tick");
 }
 
 // Called to bind functionality to input
