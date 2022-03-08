@@ -46,7 +46,6 @@ private:
 	// class ABHGameMode* GameMode;
 	bool bLevelEnded = false;
 	float Mass;
-	float DeltaSeconds;
 
 	void MoveLeftRight(float AxisValue);
 };

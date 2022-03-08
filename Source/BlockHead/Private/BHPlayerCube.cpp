@@ -49,8 +49,9 @@ void ABHPlayerCube::BeginPlay() {
 
 void ABHPlayerCube::MoveLeftRight(float AxisValue) {
 	if (!bLevelEnded) {
-		const FVector Impulse(0.0f, AxisValue * SideForce * Mass * DeltaSeconds, 0.0f);
+		const FVector Impulse(0.0f, AxisValue * SideForce * Mass * FApp::GetDeltaTime(), 0.0f);
 		Cube->AddImpulse(Impulse);
+
 	}
 }
 
@@ -62,8 +63,6 @@ void ABHPlayerCube::Tick(float DeltaTime) {
 		const FVector Impulse(ForwardForce * Mass * DeltaTime, 0.0f, 0.0f);
 		Cube->AddImpulse(Impulse);
 	}
-
-	DeltaSeconds = DeltaTime;
 }
 
 // Called to bind functionality to input
