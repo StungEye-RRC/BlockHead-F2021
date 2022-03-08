@@ -13,8 +13,6 @@ class BLOCKHEAD_API ABHEndPoint : public AActor {
 public:
 	// Sets default values for this actor's properties
 	ABHEndPoint();
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 protected:
 	// Called when the game starts or when spawned

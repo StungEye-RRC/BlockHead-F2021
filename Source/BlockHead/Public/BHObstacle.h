@@ -13,8 +13,6 @@ class BLOCKHEAD_API ABHObstacle : public AActor {
 public:
 	// Sets default values for this actor's properties
 	ABHObstacle();
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 protected:
 	// Called when the game starts or when spawned
