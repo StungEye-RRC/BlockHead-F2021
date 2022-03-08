@@ -17,4 +17,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Configure")
+	class UBoxComponent* Box; // Forward declard component class for pointer.
 };
