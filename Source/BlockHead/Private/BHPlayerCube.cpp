@@ -3,6 +3,7 @@
 
 #include "BHPlayerCube.h"
 
+#include "BHGameMode.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -42,9 +43,24 @@ void ABHPlayerCube::BeginPlay() {
 	Super::BeginPlay();
 	print("BeginPlayer");
 
+	GameMode = Cast<ABHGameMode>(GetWorld()->GetAuthGameMode());
+
 	Cube->SetSimulatePhysics(true);
 	Mass = Cube->GetMass();
 
+	Cube->OnComponentBeginOverlap.AddDynamic(this, &ABHPlayerCube::OnBeginOverlap);
+	Cube->OnComponentHit.AddDynamic(this, &ABHPlayerCube::OnHit);
+}
+
+void ABHPlayerCube::OnHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp,
+                          FVector NormalImpulse, const FHitResult& Hit) {
+	print("On Hit");
+}
+
+void ABHPlayerCube::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                   const FHitResult& SweepResult) {
+	print("On Overlap");
 }
 
 void ABHPlayerCube::MoveLeftRight(float AxisValue) {

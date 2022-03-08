@@ -42,8 +42,23 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float SideForce{3000};
 
+	UFUNCTION()
+	void OnHit(class UPrimitiveComponent* MyComp, AActor* Other,
+	           UPrimitiveComponent* OtherComp,
+	           FVector NormalImpulse,
+	           const FHitResult& Hit);
+
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* OverlappedComp,
+	                    AActor* OtherActor,
+	                    UPrimitiveComponent* OtherComp,
+	                    int32 OtherBodyIndex,
+	                    bool bFromSweep,
+	                    const FHitResult& SweepResult);
+
+
 private:
-	// class ABHGameMode* GameMode;
+	class ABHGameMode* GameMode; // Forward declar ABHGameMode for a pointer to the game mode.
 	bool bLevelEnded = false;
 	float Mass;
 
