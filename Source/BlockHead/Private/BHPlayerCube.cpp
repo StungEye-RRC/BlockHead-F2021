@@ -47,6 +47,12 @@ void ABHPlayerCube::BeginPlay() {
 
 	GameMode = Cast<ABHGameMode>(GetWorld()->GetAuthGameMode());
 
+	if (GameMode) {
+		print("Success Cast to ABH Game Mode.");
+	} else {
+		print("Unsuccess Cast to ABH Game Mode!");
+	}
+
 	Cube->SetSimulatePhysics(true);
 	Mass = Cube->GetMass();
 
@@ -77,6 +83,12 @@ void ABHPlayerCube::MoveLeftRight(float AxisValue) {
 		Cube->AddImpulse(Impulse);
 
 	}
+}
+
+void ABHPlayerCube::PlayerDied() {
+}
+
+void ABHPlayerCube::KillPlayer() {
 }
 
 // Called every frame

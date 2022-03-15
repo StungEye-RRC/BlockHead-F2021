@@ -58,9 +58,11 @@ protected:
 
 
 private:
-	class ABHGameMode* GameMode; // Forward declar ABHGameMode for a pointer to the game mode.
+	class ABHGameMode* GameMode; // Forward declare ABHGameMode for a pointer to the game mode.
 	bool bLevelEnded = false;
 	float Mass;
 
 	void MoveLeftRight(float AxisValue);
+	void PlayerDied();
+	void KillPlayer();
 };
