@@ -35,6 +35,8 @@ protected:
 private:
 	virtual void BeginPlay() override;
 	void CheckLevel();
+	FString CleanedLevelString();
+	void LoadFinalMenu(bool bWonGame);
 
 	APlayerController* Controller;
 

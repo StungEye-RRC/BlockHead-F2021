@@ -62,6 +62,8 @@ private:
 	bool bLevelEnded = false;
 	float Mass;
 
+	FTimerHandle PlayerDiedTimer;
+
 	void MoveLeftRight(float AxisValue);
 	void PlayerDied();
 	void KillPlayer();

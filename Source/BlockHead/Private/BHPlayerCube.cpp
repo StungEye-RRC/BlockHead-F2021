@@ -47,10 +47,8 @@ void ABHPlayerCube::BeginPlay() {
 
 	GameMode = Cast<ABHGameMode>(GetWorld()->GetAuthGameMode());
 
-	if (GameMode) {
-		print("Success Cast to ABH Game Mode.");
-	} else {
-		print("Unsuccess Cast to ABH Game Mode!");
+	if (!GameMode) {
+		print("Unsuccessful Cast to ABH Game Mode! Check Project Settings Maps & Modes.");
 	}
 
 	Cube->SetSimulatePhysics(true);
@@ -65,6 +63,7 @@ void ABHPlayerCube::OnHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitive
 	ABHObstacle* Obstacle = Cast<ABHObstacle>(Other);
 	if (Obstacle) {
 		print("On Hit: Obstacle");
+		PlayerDied();
 	}
 }
 
@@ -74,6 +73,8 @@ void ABHPlayerCube::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* 
 	ABHEndPoint* EndPoint = Cast<ABHEndPoint>(OtherActor);
 	if (EndPoint) {
 		print("On Overlap: EndPoint");
+		bLevelEnded = true;
+		GameMode->LevelComplete();
 	}
 }
 
@@ -86,9 +87,16 @@ void ABHPlayerCube::MoveLeftRight(float AxisValue) {
 }
 
 void ABHPlayerCube::PlayerDied() {
+	if (bLevelEnded) {
+		return;
+	}
+
+	bLevelEnded = true;
+	GetWorldTimerManager().SetTimer(PlayerDiedTimer, this, &ABHPlayerCube::KillPlayer, 2.0f, false);
 }
 
 void ABHPlayerCube::KillPlayer() {
+	GameMode->EndGame();
 }
 
 // Called every frame
@@ -96,8 +104,15 @@ void ABHPlayerCube::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	if (!bLevelEnded) {
+		// Forward Motin
 		const FVector Impulse(ForwardForce * Mass * DeltaTime, 0.0f, 0.0f);
 		Cube->AddImpulse(Impulse);
+
+		// Kill Z
+		const FVector ActorLocation = GetActorLocation();
+		if (ActorLocation.Z < -100) {
+			PlayerDied();
+		}
 	}
 }
 
